@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import { useTransition } from "react";
 import { refillHearts } from "@/actions/user-progress";
+import { createStripeUrl } from "@/actions/user-subscription";
 import { toast } from "sonner";
 
 const POINTS_TO_REFILL = 10;
@@ -29,7 +30,19 @@ export const Items = ({
       refillHearts()
       .catch(() => toast.error("Something went wrong"))
     });
-  }
+  };
+
+  const onUpgrade = () => {
+    startTransition(() => {
+      createStripeUrl() // Request a Stripe URL from the server.
+      .then((response) => {
+        if (response.data) {
+          window.location.href = response.data;
+        }
+      })
+      .catch(() => toast.error("Something went wrong"));
+    });
+  };
 
   return(
     <ul className="w-full">
@@ -68,6 +81,25 @@ export const Items = ({
             </div>
           )
         }
+        </Button>
+      </div>
+      <div className="flex items-center w-full p-4 pt-8 gap-x-4 border-t-2">
+        <Image
+          src="/unlimited.svg"
+          alt="unlimited"
+          height={55}
+          width={55}
+        />
+        <div className="flex-1">
+          <p className="text-neutral-700 text-base lg:text-xl font-bold">
+            Unlimited hearts
+          </p>
+        </div>
+        <Button
+          disabled={pending}
+          onClick={onUpgrade}
+        >
+          {hasActiveSubscription ? "settings" : "upgrade"}
         </Button>
       </div>
     </ul>

@@ -1,6 +1,20 @@
 import { clerkMiddleware } from '@clerk/nextjs/server';
 
-export default clerkMiddleware();
+export default clerkMiddleware(async (auth, req) => {
+  const path = req.nextUrl.pathname;
+
+  const isPublicRoute =
+    path === "/" ||
+    path === "/api/webhooks/stripe" ||
+    path === "/sign-in" ||
+    path.startsWith("/sign-in/") ||
+    path === "/sign-up" ||
+    path.startsWith("/sign-up/");
+
+  if (!isPublicRoute) {
+    await auth.protect();
+  }
+});
 
 export const config = {
   matcher: [
