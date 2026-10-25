@@ -4,11 +4,10 @@ import db from "@/db/drizzle"
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"
 import { auth, currentUser } from "@clerk/nextjs/server"
-import { getCourseById, getUserProgress } from "@/db/queries";
-import { challengeProgress, userProgress, challenges } from "@/db/schema";
+import { POINTS_TO_REFILL } from "@/constants";
+import { getCourseById, getUserProgress, getUserSubscription } from "@/db/queries";
+import { challengeProgress, userProgress, challenges, userSubscription } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
-
-const POINTS_TO_REFILL = 10;
 
 export const upsertUserProgress = async (courseId: number) => {
   const  {userId}  = await auth();
@@ -23,9 +22,9 @@ export const upsertUserProgress = async (courseId: number) => {
     throw new Error("Course not found");
   }
 
-  // if(!course.units.length || !course.units[0].lessons.length) {
-  //   throw new Error("Course is empty");
-  // }
+  if(!course.units.length || !course.units[0].lessons.length) {
+    throw new Error("Course is empty");
+  }
 
   const existingUserProgress = await getUserProgress();
 
@@ -61,6 +60,7 @@ export const reduceHearts = async (challengeId: number) => {
   }
 
   const currentUserProgress = await getUserProgress();
+  const userSubscription = await getUserSubscription();
 
   const challenge = await db.query.challenges.findFirst({
     where: eq(challenges.id, challengeId),
@@ -89,6 +89,12 @@ export const reduceHearts = async (challengeId: number) => {
     throw new Error("User progress not found");
   }
 
+  // Pro user: return early without deducting a heart.
+  if(userSubscription?.isActive) {
+    return { error: "subscription" };
+  }
+
+  // Non-Pro user: continue to deduct a heart.
   if (currentUserProgress.hearts === 0) {
     return { error: "hearts"};
   }
