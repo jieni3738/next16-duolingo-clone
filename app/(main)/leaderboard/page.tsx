@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Quests } from "@/components/quests";
+import { Promo } from "@/components/promo";
 
 
 const LeaderBoardPage = async () => {
@@ -38,6 +40,10 @@ const LeaderBoardPage = async () => {
           points={userProgress.points}
           hasActiveSubscription={isPro}
         />
+        {!isPro && (
+          <Promo />
+        )}
+        <Quests points={userProgress.points} />
       </StickyWrapper>
       <FeedWrapper>
         <div className = "w-full flex flex-col items-center">
