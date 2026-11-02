@@ -49,16 +49,42 @@ export async function POST(req: Request) {
   }
 
   if (event.type === "invoice.payment_succeeded") {
-    const subscription = await stripe.subscriptions.retrieve(
-        session.subscription as string
-    );
+  const invoice = event.data.object as Stripe.Invoice;
 
-    await db.update(userSubscription).set({
-      stripePriceId: subscription.items.data[0].price.id,
-      stripeCurrentPeriodEnd: new Date(
-        subscription.items.data[0].current_period_end * 1000,
-      ),
-    }).where(eq(userSubscription.stripeSubscriptionId, subscription.id))
+  const subscriptionRef =
+    invoice.parent?.subscription_details?.subscription;
+
+  if (!subscriptionRef) {
+    return new NextResponse(null, { status: 200 });
   }
+
+  const subscriptionId =
+    typeof subscriptionRef === "string"
+      ? subscriptionRef
+      : subscriptionRef.id;
+
+  const subscription =
+    await stripe.subscriptions.retrieve(subscriptionId);
+
+  const item = subscription.items.data[0];
+
+  if (!item) {
+    return new NextResponse("Subscription item missing", {
+      status: 500,
+    });
+  }
+
+  await db
+    .update(userSubscription)
+    .set({
+      stripePriceId: item.price.id,
+      stripeCurrentPeriodEnd: new Date(
+        item.current_period_end * 1000,
+      ),
+    })
+    .where(
+      eq(userSubscription.stripeSubscriptionId, subscription.id),
+    );
+}
   return new NextResponse(null, { status: 200 });
 }
