@@ -8,5 +8,5 @@ type Props = {
   lessons: (typeof lessons.$inferSelect & {
     completed: boolean;
   })[];
-  activeLesson: 
+  activeLesson: typeof lessons.$inferSelect | undefined;
 }

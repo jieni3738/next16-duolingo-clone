@@ -6,7 +6,7 @@ import { getIsAdmin } from "@/lib/auth";
 
 export const GET = async (
   req: Request,
-  { params }: { params: Promise<{ courseId: number }> },
+  { params }: { params: Promise<{ courseId: string }> },
 ) => {
 
   const isAdmin = await getIsAdmin();
@@ -26,7 +26,7 @@ export const GET = async (
 
 export const PUT = async (
   req: Request,
-  { params }: { params: Promise<{ courseId: number }>},
+  { params }: { params: Promise<{ courseId: string }>},
 ) => {
 
   const isAdmin = await getIsAdmin();
@@ -48,7 +48,7 @@ export const PUT = async (
 
 export const DELETE = async (
   req: Request,
-  { params }: { params: Promise<{ courseId: number }>},
+  { params }: { params: Promise<{ courseId: string }>},
 ) => {
 
   const isAdmin = await getIsAdmin();

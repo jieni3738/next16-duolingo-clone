@@ -95,114 +95,247 @@ const main = async () => {
           lessonId: 1,
           type: "SELECT",
           order: 1,
-          question: 'Which one of the these is the "the man"?',
+          question: 'Which one of the these is the "the man" ?',
         },
         {
           id: 2,
           lessonId: 1,
-          type: "ASSIST",
+          type: "SELECT",
           order: 2,
-          question: '"the man"?',
+          question: 'Which one of the these is the "the woman" ?',
         },
         {
           id: 3,
           lessonId: 1,
           type: "SELECT",
           order: 3,
-          question: 'Which one of the these is the "the robot"?',
+          question: 'Which one of the these is the "the boy"?',
         },
-      ]);
-
-      await db.insert(schema.challengeOptions).values([
-        {
-          challengeId: 1,
-          imgSrc: "/man.svg",
-          correct: true,
-          text: "el hombre",
-          audioSrc: "/es_man.mp3",
-        },
-        {
-          challengeId: 1,
-          imgSrc: "/woman.svg",
-          correct: false,
-          text: "la mujer",
-          audioSrc: "/es_women.mp3",
-        },
-        {
-          challengeId: 1,
-          imgSrc: "/robot.svg",
-          correct: false,
-          text: "la robot",
-          audioSrc: "/es_robot.mp3",
-        },
-      ]);
-
-      await db.insert(schema.challengeOptions).values([
-        {
-          challengeId: 2,
-          correct: true,
-          text: "el hombre",
-          audioSrc: "/es_man.mp3",
-        },
-        {
-          challengeId: 2,
-          correct: false,
-          text: "la mujer",
-          audioSrc: "/es_women.mp3",
-        },
-        {
-          challengeId: 2,
-          correct: false,
-          text: "la robot",
-          audioSrc: "/es_robot.mp3",
-        },
-      ]);
-
-      await db.insert(schema.challengeOptions).values([
-        {
-          challengeId: 3,
-          imgSrc: "/man.svg",
-          correct: false,
-          text: "el hombre",
-          audioSrc: "/es_man.mp3",
-        },
-        {
-          challengeId: 3,
-          imgSrc: "/woman.svg",
-          correct: false,
-          text: "la mujer",
-          audioSrc: "/es_women.mp3",
-        },
-        {
-          challengeId: 3,
-          imgSrc: "/robot.svg",
-          correct: true,
-          text: "la robot",
-          audioSrc: "/es_robot.mp3",
-        },
-      ]);
-
-      await db.insert(schema.challenges).values([
         {
           id: 4,
-          lessonId: 2,
-          type: "SELECT",
-          order: 1,
-          question: 'Which one of the these is the "the man"?',
+          lessonId: 1,
+          type: "ASSIST",
+          order: 4,
+          question: '"the man"?',
         },
         {
           id: 5,
-          lessonId: 2,
-          type: "ASSIST",
-          order: 2,
-          question: '"the man"?',
+          lessonId: 1,
+          type: "SELECT",
+          order: 5,
+          question: 'Which one of the these is the "the zombie"?',
         },
+      ]);
+
+      await db.insert(schema.challengeOptions).values([
+        {
+          challengeId: 1,
+          imgSrc: "/man.svg",
+          correct: true,
+          text: "el hombre",
+          audioSrc: "/es_man.mp3",
+        },
+        {
+          challengeId: 1,
+          imgSrc: "/woman.svg",
+          correct: false,
+          text: "la mujer",
+          audioSrc: "/es_women.mp3",
+        },
+        {
+          challengeId: 1,
+          imgSrc: "/boy.svg",
+          correct: false,
+          text: "es chico",
+          audioSrc: "/es_boy.mp3",
+        },
+      ]);
+
+      await db.insert(schema.challengeOptions).values([
+        {
+          challengeId: 2,
+          imgSrc: "/woman.svg",
+          correct: true,
+          text: "la mujer",
+          audioSrc: "/es_women.mp3",
+        },
+        {
+          challengeId: 2,
+          imgSrc: "/man.svg",
+          correct: false,
+          text: "el hombre",
+          audioSrc: "/es_man.mp3",
+        },
+        {
+          challengeId: 2,
+          imgSrc: "/robot.svg",
+          correct: false,
+          text: "la robot",
+          audioSrc: "/es_robot.mp3",
+        },
+      ]);
+
+       await db.insert(schema.challengeOptions).values([
+        {
+          challengeId: 3,
+          imgSrc: "/robot.svg",
+          correct: false,
+          text: "el robot",
+          audioSrc: "/es_robot.mp3",
+        },
+        {
+          challengeId: 3,
+          imgSrc: "/man.svg",
+          correct: false,
+          text: "el hombre",
+          audioSrc: "/es_man.mp3",
+        },
+        {
+          challengeId: 3,
+          imgSrc: "/boy.svg",
+          correct: true,
+          text: "es chico",
+          audioSrc: "/es_boy.mp3",
+        },
+      ]);
+
+      await db.insert(schema.challengeOptions).values([
+        {
+          challengeId: 4,
+          correct: false,
+          text: "la mujer",
+          audioSrc: "/es_women.mp3",
+        },
+        {
+          challengeId: 4,
+          correct: true,
+          text: "el hombre",
+          audioSrc: "/es_man.mp3",
+        },
+        {
+          challengeId: 4,
+          correct: false,
+          text: "es chico",
+          audioSrc: "/es_boy.mp3",
+        },
+      ]);
+
+      await db.insert(schema.challengeOptions).values([
+        {
+          challengeId: 5,
+          imgSrc: "/woman.svg",
+          correct: false,
+          text: "la mujer",
+          audioSrc: "/es_women.mp3",
+        },
+        {
+          challengeId: 5,
+          imgSrc: "/zombie.svg",
+          correct: true,
+          text: "el zombie",
+          audioSrc: "/es_zombie.mp3",
+        },
+        {
+          challengeId: 5,
+          imgSrc: "/boy.svg",
+          correct: false,
+          text: "es chico",
+          audioSrc: "/es_boy.mp3",
+        },
+      ]);
+
+
+      await db.insert(schema.challenges).values([
         {
           id: 6,
           lessonId: 2,
           type: "SELECT",
-          order: 3,
+          order: 1,
+          question: 'Which one of the these is the "the girl"?',
+        },
+        {
+          id: 7,
+          lessonId: 2,
+          type: "SELECT",
+          order: 2,
           question: 'Which one of the these is the "the robot"?',
+        },
+        {
+          id: 8,
+          lessonId: 2,
+          type: "ASSIST",
+          order: 3,
+          question: '"the girl"?',
+        },
+      ]);
+
+      await db.insert(schema.challengeOptions).values([
+        {
+          challengeId: 6,
+          imgSrc: "/girl.svg",
+          correct: true,
+          text: "la nina",
+          audioSrc: "/es_girl.mp3",
+        },
+        {
+          challengeId: 6,
+          imgSrc: "/zombie.svg",
+          correct: false,
+          text: "el zombie",
+          audioSrc: "/es_zombie.mp3",
+        },
+        {
+          challengeId: 6,
+          imgSrc: "/boy.svg",
+          correct: false,
+          text: "es chico",
+          audioSrc: "/es_boy.mp3",
+        },
+      ]);
+
+      await db.insert(schema.challengeOptions).values([
+        {
+          challengeId: 7,
+          imgSrc: "/boy.svg",
+          correct: false,
+          text: "es chico",
+          audioSrc: "/es_boy.mp3",
+        },
+        {
+          challengeId: 7,
+          imgSrc: "/girl.svg",
+          correct: false,
+          text: "la nina",
+          audioSrc: "/es_girl.mp3",
+        },
+        {
+          challengeId: 7,
+          imgSrc: "/robot.svg",
+          correct: true,
+          text: "el robot",
+          audioSrc: "/es_robot.mp3",
+        },
+        
+      ]);
+
+       await db.insert(schema.challengeOptions).values([
+        {
+          challengeId: 8,
+          correct: false,
+          text: "la mujer",
+          audioSrc: "/es_women.mp3",
+        },
+        {
+          challengeId: 8,
+          correct: false,
+          text: "el hombre",
+          audioSrc: "/es_man.mp3",
+        },
+        {
+          challengeId: 8,
+          correct: true,
+          text: "la nina",
+          audioSrc: "/es_girl.mp3",
         },
       ]);
 
